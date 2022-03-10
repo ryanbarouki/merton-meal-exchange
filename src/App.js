@@ -3,6 +3,7 @@ import { MealListing } from './components/MealListing';
 import Button from '@mui/material/Button';
 import styled from 'styled-components';
 import { AddItemModal } from './components/AddItemModal';
+import { useState } from 'react';
 
 const Logo = styled.div`
   width: 70px;
@@ -29,16 +30,27 @@ const ButtonContainer = styled.div`
 `;
 
 const App = () => {
+  const [items, setItems] = useState([]);
+
+  const handleAddItem = (item) => {
+    setItems([...items, item]);
+    console.log(items);
+  };
+
   return (
     <div className="App">
       <TopBar>
         <Logo src="merton.png"></Logo>
-        <Name>MERTON MEALS</Name>
+        <Name>MERTON MEAL EXCHANGE</Name>
       </TopBar>
       <ButtonContainer>
-        <AddItemModal/>
+        <AddItemModal
+          onSubmit={handleAddItem} 
+        />
       </ButtonContainer>
-      <MealListing/>
+      <MealListing
+        items={items} 
+      />
     </div>
   );
 }

@@ -16,7 +16,8 @@ const rows = [
   createData('Early Supper', 'Tuesday 8th March', 'Vegetarian, Fruit Plate', '07753255825', false),
 ];
 
-export const MealListing = () => {
+export const MealListing = ({items}) => {
+  console.log(items);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -30,7 +31,7 @@ export const MealListing = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {items && items.length > 0 && items.map((row) => (
             <TableRow
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
