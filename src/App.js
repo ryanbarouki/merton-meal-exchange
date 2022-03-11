@@ -5,7 +5,7 @@ import { AddItemModal } from './components/AddItemModal';
 import { useState } from 'react';
 
 const Logo = styled.div`
-  width: 70px;
+  width: 50px;
   content: url(${props => props.src});
   position: relative;
 
