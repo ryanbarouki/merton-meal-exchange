@@ -1,6 +1,5 @@
 import './App.css';
 import { MealListing } from './components/MealListing';
-import Button from '@mui/material/Button';
 import styled from 'styled-components';
 import { AddItemModal } from './components/AddItemModal';
 import { useState } from 'react';
@@ -34,7 +33,12 @@ const App = () => {
 
   const handleAddItem = (item) => {
     setItems([...items, item]);
-    console.log(items);
+  };
+
+  const handleClaim = ({name}, index) => {
+    const newItems = [...items];
+    newItems[index].claimed = name;
+    setItems(newItems);
   };
 
   return (
@@ -50,6 +54,7 @@ const App = () => {
       </ButtonContainer>
       <MealListing
         items={items} 
+        onClaim={handleClaim}
       />
     </div>
   );

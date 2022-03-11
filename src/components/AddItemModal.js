@@ -50,31 +50,26 @@ export const AddItemModal = ({onSubmit}) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formValues);
     onSubmit(formValues);
     setOpen(false);
   };
 
   const handleSelectChange = event => {
-    console.log(event.target.value);
     setFormValues({...formValues, 
     mealType: event.target.value});
   };
 
   const handleDateChange = event => {
-    console.log(event.target.value);
     setFormValues({...formValues, 
     date: event.target.value});
   };
 
   const handleDietChange = event => {
-    console.log(event.target.value);
     setFormValues({...formValues, 
     dietary: event.target.value});
   };
 
   const handleContactChange = event => {
-    console.log(event.target.value);
     setFormValues({...formValues, 
     contact: event.target.value});
   };

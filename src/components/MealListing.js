@@ -6,18 +6,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
+import { ClaimModal } from './ClaimModal';
 
-function createData(mealType, date, dietary, contact, claimed) {
-  return { mealType, date, dietary, contact, claimed };
-}
+export const MealListing = ({items, onClaim}) => {
 
-const rows = [
-  createData('Early Supper', 'Monday 7th March', 'Vegetarian, Fruit Plate', '07753255825', 'Ryan Barouki'),
-  createData('Early Supper', 'Tuesday 8th March', 'Vegetarian, Fruit Plate', '07753255825', false),
-];
-
-export const MealListing = ({items}) => {
-  console.log(items);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -31,7 +23,7 @@ export const MealListing = ({items}) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {items && items.length > 0 && items.map((row) => (
+          {items && items.length > 0 && items.map((row, index) => (
             <TableRow
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -42,9 +34,8 @@ export const MealListing = ({items}) => {
               <TableCell align="left">{row.date}</TableCell>
               <TableCell align="left">{row.dietary}</TableCell>
               <TableCell align="left">{row.contact}</TableCell>
-              <TableCell align="left">{row.claimed ?
-                row.claimed :
-                <Button>Claim</Button>
+              <TableCell align="left">{row.claimed ??
+                <ClaimModal onSubmit={onClaim} index={index}>Claim</ClaimModal>
               }</TableCell>
             </TableRow>
           ))}
