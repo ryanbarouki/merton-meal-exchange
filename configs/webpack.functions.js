@@ -1,8 +1,8 @@
-var webpack = require('webpack');
-/* fix for https://medium.com/@danbruder/typeerror-require-is-not-a-function-webpack-faunadb-6e785858d23b */
+const webpack = require('webpack')
+
 module.exports = {
-  plugins: [new webpack.DefinePlugin({ 'global.GENTLY': false })],
-  node: {
-    __dirname: true
-  }
-};
+  mode: "development",
+//   plugins: [
+//     new webpack.DefinePlugin({ "global.GENTLY": false })
+//   ],
+}
