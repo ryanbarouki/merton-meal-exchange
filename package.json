@@ -25,7 +25,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "serve": "netlify-lambda serve ./serverless_funcs -c ./configs/webpack.functions.js",
-    "build-lambda": "netlify-lambda build ./serverless_funcs -c ./configs/webpack.functions.js"
+    "build-lambda": "netlify-lambda build ./serverless_funcs"
   },
   "eslintConfig": {
     "extends": [
