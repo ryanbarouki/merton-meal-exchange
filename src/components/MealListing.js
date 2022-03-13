@@ -8,7 +8,7 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { ClaimModal } from './ClaimModal';
 
-export const MealListing = ({items, onClaim}) => {
+export const MealListing = ({items, onClaim, onDelete}) => {
 
   return (
     <TableContainer component={Paper}>
@@ -20,6 +20,7 @@ export const MealListing = ({items, onClaim}) => {
             <TableCell align="left">Dietary Type</TableCell>
             <TableCell align="left">Contact</TableCell>
             <TableCell align="left">Claimed By</TableCell>
+            <TableCell align="left"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -37,6 +38,7 @@ export const MealListing = ({items, onClaim}) => {
               <TableCell align="left">{row.claimed ??
                 <ClaimModal onSubmit={onClaim} index={index}>Claim</ClaimModal>
               }</TableCell>
+              <TableCell align="left"><Button onClick={() => onDelete(row, index)}>REMOVE</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>

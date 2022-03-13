@@ -65,6 +65,15 @@ const App = () => {
     });
   };
 
+  const handleDelete = (item, index) => {
+    axios.post('/.netlify/functions/delete', item)
+      .then((response) => {
+        setItems(items.filter((val, idx) => index !== idx));
+      }, (error) => {
+        console.log(error);
+      });
+  }
+
   return (
     <div className="App">
       <TopBar>
@@ -79,6 +88,7 @@ const App = () => {
       <MealListing
         items={items} 
         onClaim={handleClaim}
+        onDelete={handleDelete}
       />
     </div>
   );
