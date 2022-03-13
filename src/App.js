@@ -35,7 +35,6 @@ const App = () => {
   useEffect(() => {
     axios.get('/.netlify/functions/read-all')
     .then(response => {
-      console.log(response.data);
       setItems(response.data);
     }, error => {
       console.log(error);
@@ -43,10 +42,9 @@ const App = () => {
   },[]);
 
   const handleAddItem = (item) => {
-    setItems([...items, item]);
     axios.post('/.netlify/functions/create', item)
       .then((response) => {
-        console.log(response.data);
+        setItems([...items, item]);
       }, (error) => {
         console.log(error);
       });
@@ -54,8 +52,17 @@ const App = () => {
 
   const handleClaim = ({name}, index) => {
     const newItems = [...items];
-    newItems[index].claimed = name;
+    newItems[index] = {...items[index],
+      claimed: name
+    };
     setItems(newItems);
+
+    axios.put('/.netlify/functions/update', newItems[index])
+    .then(response => {
+      console.log(response);
+    }, error => {
+      console.log(error);
+    });
   };
 
   return (

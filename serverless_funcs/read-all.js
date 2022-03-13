@@ -6,6 +6,21 @@ const client = new faunadb.Client({
   secret: process.env.FAUNADB_SERVER_SECRET
 });
 
+client.query(
+  q.CreateIndex({
+    name: 'items_by_id',
+    source: q.Collection('Meals'),
+    terms: [{ field: ['data', 'id'] }],
+  })
+)
+.then((ret) => console.log(ret))
+.catch((err) => console.error(
+  'Error: [%s] %s: %s',
+  err.name,
+  err.message,
+  err.errors()[0].description,
+))
+
 exports.handler = async (event, context) => {
   console.log('Function `read-all` invoked');
   return client
@@ -21,8 +36,8 @@ exports.handler = async (event, context) => {
       return client.query(getAllItemsDataQuery).then(ret => {
         // wellformedData includes customers id in the response.
         const wellformedData = ret.map(malformedResponse => {
+          console.log(malformedResponse)
           return {
-            id: malformedResponse.ts,
             ...malformedResponse.data
           };
         });

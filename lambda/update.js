@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./read-all.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./update.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -10328,57 +10328,46 @@ module.exports = __webpack_require__(/*! util */ "util").deprecate;
 
 /***/ }),
 
-/***/ "./read-all.js":
-/*!*********************!*\
-  !*** ./read-all.js ***!
-  \*********************/
+/***/ "./update.js":
+/*!*******************!*\
+  !*** ./update.js ***!
+  \*******************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 __webpack_require__(/*! dotenv */ "../node_modules/dotenv/lib/main.js").config();
 
 const faunadb = __webpack_require__(/*! faunadb */ "../node_modules/faunadb/index.js");
+/* configure faunaDB Client with our secret */
+
 
 const q = faunadb.query;
 const client = new faunadb.Client({
   secret: process.env.FAUNADB_SERVER_SECRET
 });
-client.query(q.CreateIndex({
-  name: 'items_by_id',
-  source: q.Collection('Meals'),
-  terms: [{
-    field: ['data', 'id']
-  }]
-})).then(ret => console.log(ret)).catch(err => console.error('Error: [%s] %s: %s', err.name, err.message, err.errors()[0].description));
+/* export our lambda function as named "handler" export */
 
 exports.handler = async (event, context) => {
-  console.log('Function `read-all` invoked');
-  return client.query(q.Paginate(q.Documents(q.Collection("Meals")))).then(response => {
-    const itemRefs = response.data; // create new query out of item refs. http://bit.ly/2LG3MLg
+  /* parse the string body into a useable JS object */
+  const data = JSON.parse(event.body);
+  console.log('Function `update` invoked', data);
+  const item = {
+    data: data
+  };
+  /* construct the fauna query */
 
-    const getAllItemsDataQuery = itemRefs.map(ref => {
-      return q.Get(ref);
-    }); // then query the refs.
+  return client.query(q.Update(q.Select(0, q.Paginate(q.Match(q.Index('items_by_id'), data.id))), item)).then(response => {
+    console.log('success', response);
+    /* Success! return the response with statusCode 200 */
 
-    return client.query(getAllItemsDataQuery).then(ret => {
-      // wellformedData includes customers id in the response.
-      const wellformedData = ret.map(malformedResponse => {
-        console.log(malformedResponse);
-        return _objectSpread({}, malformedResponse.data);
-      });
-      return {
-        statusCode: 200,
-        body: JSON.stringify(wellformedData)
-      };
-    });
+    return {
+      statusCode: 200,
+      body: JSON.stringify(response)
+    };
   }).catch(error => {
     console.log('error', error);
+    /* Error! return the error with statusCode 400 */
+
     return {
       statusCode: 400,
       body: JSON.stringify(error)

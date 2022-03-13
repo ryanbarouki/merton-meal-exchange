@@ -9,6 +9,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { v4 as uuid } from 'uuid';
 
 const StyledBox = styled(Box)`
   display: grid;
@@ -50,7 +51,8 @@ export const AddItemModal = ({onSubmit}) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit(formValues);
+    console.log(uuid())
+    onSubmit({...formValues, id: uuid()});
     setOpen(false);
   };
 
