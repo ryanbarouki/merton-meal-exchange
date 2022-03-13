@@ -28,7 +28,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "serve": "netlify-lambda serve ./serverless_funcs -c ./configs/webpack.functions.js",
+    "serve": "netlify-lambda serve ./serverless_funcs",
     "build-lambda": "netlify-lambda build ./serverless_funcs"
   },
   "eslintConfig": {
@@ -48,6 +48,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "http://localhost:9000"
+  }
 }
