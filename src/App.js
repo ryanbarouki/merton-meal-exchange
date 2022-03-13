@@ -2,7 +2,8 @@ import './App.css';
 import { MealListing } from './components/MealListing';
 import styled from 'styled-components';
 import { AddItemModal } from './components/AddItemModal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const Logo = styled.div`
   width: 50px;
@@ -31,8 +32,24 @@ const ButtonContainer = styled.div`
 const App = () => {
   const [items, setItems] = useState([]);
 
+  useEffect(() => {
+    axios.get('/.netlify/functions/read-all')
+    .then(response => {
+      console.log(response.data);
+      setItems(response.data);
+    }, error => {
+      console.log(error);
+    });
+  },[]);
+
   const handleAddItem = (item) => {
     setItems([...items, item]);
+    axios.post('/.netlify/functions/create', item)
+      .then((response) => {
+        console.log(response.data);
+      }, (error) => {
+        console.log(error);
+      });
   };
 
   const handleClaim = ({name}, index) => {
