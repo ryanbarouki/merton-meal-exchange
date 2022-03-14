@@ -42,9 +42,10 @@ const App = () => {
   },[]);
 
   const handleAddItem = (item) => {
+    setItems([...items, item]);
+
     axios.post('/.netlify/functions/create', item)
       .then((response) => {
-        setItems([...items, item]);
       }, (error) => {
         console.log(error);
       });
@@ -66,9 +67,10 @@ const App = () => {
   };
 
   const handleDelete = (item, index) => {
+    setItems(items.filter((val, idx) => index !== idx));
     axios.post('/.netlify/functions/delete', item)
       .then((response) => {
-        setItems(items.filter((val, idx) => index !== idx));
+        console.log(response);
       }, (error) => {
         console.log(error);
       });
