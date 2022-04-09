@@ -12,7 +12,7 @@ export const MealListing = ({items, onClaim, onDelete}) => {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table sx={{ minWidth: 300 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell align="left">Meal Type</TableCell>
@@ -38,7 +38,7 @@ export const MealListing = ({items, onClaim, onDelete}) => {
               <TableCell align="left">{row.claimed ??
                 <ClaimModal onSubmit={onClaim} index={index}>Claim</ClaimModal>
               }</TableCell>
-              <TableCell align="left"><Button onClick={() => onDelete(row, index)}>REMOVE</Button></TableCell>
+              <TableCell align="left"><Button variant="outlined" onClick={() => onDelete(row, index)}>REMOVE</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>

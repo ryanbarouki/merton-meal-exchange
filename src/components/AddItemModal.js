@@ -84,7 +84,7 @@ export const AddItemModal = ({onSubmit}) => {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Add Item</Button>
+      <Button variant="outlined" onClick={handleOpen}>Add Item</Button>
       <Modal
         open={open}
         onClose={handleClose}

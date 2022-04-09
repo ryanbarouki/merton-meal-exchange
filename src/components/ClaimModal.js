@@ -50,7 +50,7 @@ export const ClaimModal = ({onSubmit, index}) => {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Claim</Button>
+      <Button variant="outlined" onClick={handleOpen}>Claim</Button>
       <Modal
         open={open}
         onClose={handleClose}
