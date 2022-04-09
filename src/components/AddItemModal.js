@@ -40,6 +40,7 @@ const defaultValues = {
   mealType: "",
   date: "",
   dietary: "",
+  extra_diet: "",
   contact: ""
 };
 
@@ -69,6 +70,11 @@ export const AddItemModal = ({onSubmit}) => {
   const handleDietChange = event => {
     setFormValues({...formValues, 
     dietary: event.target.value});
+  };
+
+  const handleExtraDietChange = event => {
+    setFormValues({...formValues, 
+    extra_diet: event.target.value});
   };
 
   const handleContactChange = event => {
@@ -122,11 +128,26 @@ export const AddItemModal = ({onSubmit}) => {
             </Stack>
             </Input>
             <Input>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Dietary</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Dietary"
+                onChange={handleDietChange}
+                defaultValue=""
+              >
+                <MenuItem value="Vegetarian">Vegetarian</MenuItem>
+                <MenuItem value="Standard">Standard</MenuItem>
+              </Select>
+            </FormControl>
+            </Input>
+            <Input>
             <TextField
               id="outlined-basic"
-              label="Dietary"
+              label="Extra Dietary"
               variant="outlined"
-              onChange={handleDietChange}
+              onChange={handleExtraDietChange}
             />
             </Input>
             <Input>

@@ -33,7 +33,7 @@ export const MealListing = ({items, onClaim, onDelete}) => {
                 {row.mealType}
               </TableCell>
               <TableCell align="left">{row.date}</TableCell>
-              <TableCell align="left">{row.dietary}</TableCell>
+              <TableCell align="left">{row.dietary}, {row.extra_diet}</TableCell>
               <TableCell align="left">{row.contact}</TableCell>
               <TableCell align="left">{row.claimed ??
                 <ClaimModal onSubmit={onClaim} index={index}>Claim</ClaimModal>
